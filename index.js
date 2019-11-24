@@ -15,7 +15,6 @@ app.listen(50451, () => {
 
 app.get('/', (req, res) => {
     res.status(200).sendFile(path.join(__dirname, 'index.html'));
-    //bharat likes big weiners in his rectum
 });
 
 app.get('/api/auth/discord', (req, res) => {
@@ -31,7 +30,6 @@ app.get('/api/auth/discord/callback', async (req, res) => {
         {
             method: 'POST',
             headers: {
-                //bharat likes to take it from behind
                 Authorization: `Basic ${creds}`,
             },
         });
