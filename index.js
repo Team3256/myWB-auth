@@ -9,8 +9,8 @@ const config = require("./config.json");
 
 const redirect = encodeURIComponent(config.redirect);
 
-app.listen(50451, () => {
-    console.info('Running on port 50451');
+app.listen(8082, () => {
+    console.info('Running on port 8082');
 });
 
 app.get('/', (req, res) => {
@@ -23,16 +23,18 @@ app.get('/api/auth/discord', (req, res) => {
 
 app.get('/api/auth/discord/callback', async (req, res) => {
     console.log(req.query);
-    if (!req.query.code) throw new Error('NoCodeProvided');
-    const code = req.query.code;
-    const creds = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
-    const response = await fetch(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${code}&redirect_uri=${redirect}`,
-        {
-            method: 'POST',
-            headers: {
-                Authorization: `Basic ${creds}`,
-            },
-        });
-    const json = await response.json();
-    res.redirect(`/?token=${json.access_token}`);
+    if (req.query.code != null) {
+        const code = req.query.code;
+        const creds = btoa(`${config.CLIENT_ID}:${config.CLIENT_SECRET}`);
+        const response = await fetch(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${code}&redirect_uri=${config.redirect}`,
+            {
+                method: 'POST',
+                headers: {
+                    Authorization: `Basic ${creds}`,
+                },
+            });
+        const json = await response.json();
+        res.redirect(`/?token=${json.access_token}`);
+    }
+    res.redirect(`/?token=NO_CODE_PROVIDED`);
 });
