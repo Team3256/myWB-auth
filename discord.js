@@ -15,7 +15,10 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/callback', catchAsync(async (req, res) => {
-  if (!req.query.code) throw new Error('NoCodeProvided');
+  if (!req.query.code) {
+    res.redirect(`http://localhost:8080/#/register/discord?token=NO_CODE_PROVIDED`);
+    return;
+  }
   const code = req.query.code;
   const creds = btoa(`${CLIENT_ID}:${CLIENT_SECRET}`);
   const response = await fetch(`https://discordapp.com/api/oauth2/token?grant_type=authorization_code&code=${code}&redirect_uri=${redirect}`,
