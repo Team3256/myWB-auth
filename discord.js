@@ -11,10 +11,11 @@ const CLIENT_SECRET = config.CLIENT_SECRET;
 const redirect = encodeURIComponent(config.redirect);
 
 router.get('/login', (req, res) => {
-  res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${CLIENT_ID}&scope=identify&response_type=code&redirect_uri=${redirect}`);
+  res.redirect(`https://discordapp.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${redirect}&response_type=code&scope=identify%20guilds%20guilds.join`);
 });
 
 router.get('/callback', catchAsync(async (req, res) => {
+  console.log(req.query.code);
   if (!req.query.code) {
     res.redirect(`http://localhost:8080/#/register/discord?token=NO_CODE_PROVIDED`);
     return;
@@ -29,6 +30,7 @@ router.get('/callback', catchAsync(async (req, res) => {
       },
     });
   const json = await response.json();
+  console.log(json.access_token);
   res.redirect(`http://localhost:8080/#/register/discord?token=${json.access_token}`);
 }));
 
