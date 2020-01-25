@@ -17,7 +17,7 @@ router.get('/login', (req, res) => {
 router.get('/callback', catchAsync(async (req, res) => {
   console.log(req.query.code);
   if (!req.query.code) {
-    res.redirect(`http://localhost:8080/#/register/discord?token=NO_CODE_PROVIDED`);
+    res.redirect(`${config.web_host}/#/register/discord?token=NO_CODE_PROVIDED`);
     return;
   }
   const code = req.query.code;
@@ -31,7 +31,7 @@ router.get('/callback', catchAsync(async (req, res) => {
     });
   const json = await response.json();
   console.log(json.access_token);
-  res.redirect(`http://localhost:8080/#/register/discord?token=${json.access_token}`);
+  res.redirect(`${config.web_host}/#/register/discord?token=${json.access_token}`);
 }));
 
 module.exports = router;
