@@ -9,9 +9,11 @@
   "author": "Bharat Kathi <bharat1031@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.1",
     "btoa": "1.2.1",
     "express": "4.17.1",
-    "node-fetch": "2.6.0",
+    "form-data": "^4.0.0",
+    "node-fetch": "^2.6.0",
     "pg": "7.14.0"
   }
 }

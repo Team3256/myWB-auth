@@ -10,8 +10,8 @@ const config = require("./config.json");
 
 const redirect = encodeURIComponent(config.redirect);
 
-app.listen(8082, () => {
-    console.info('Running on port 8082');
+app.listen(6002, () => {
+    console.info('Running on port 6002');
 });
 
 app.get('/', (req, res) => {
